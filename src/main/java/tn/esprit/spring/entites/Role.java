@@ -23,7 +23,7 @@ public class Role implements Serializable {
         @GeneratedValue(strategy = GenerationType.AUTO)
         private int id;
         @Enumerated(EnumType.STRING)
-        private RoleName role;
+    //    private RoleName role;
         @ManyToMany(mappedBy="roles", cascade = CascadeType.PERSIST, fetch
                 = FetchType.EAGER)
         private Set<User> Users;
