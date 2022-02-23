@@ -30,8 +30,8 @@ public class User implements Serializable {
 	private String name;
 	private String lastName;
 	private Boolean active;
-	@ManyToMany(cascade = CascadeType.PERSIST, fetch = FetchType.EAGER)
-	private Set<Role> roles;
+	//@ManyToMany(cascade = CascadeType.PERSIST, fetch = FetchType.EAGER)
+	//private Set<Role> roles;
 	@OneToMany(cascade = CascadeType.ALL, mappedBy = "user")
 	private Set<Training> trainings;
 	@OneToMany(cascade = CascadeType.PERSIST, mappedBy = "user")
