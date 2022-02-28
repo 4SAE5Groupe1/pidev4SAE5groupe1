@@ -2,12 +2,16 @@ package tn.esprit.spring.entities;
 
 import java.io.Serializable;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -28,12 +32,16 @@ public class Complaint implements Serializable{
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name="idComplaint")
-	Long IdComplaint;
+	private Long IdComplaint;
 	@Column(name="contentComplaint")
-	String Content;
+	private String Content;
 	@Column(name="titleOffer")
-	String Title;
+	private String Title;
 	@Column(name="decisionComplaint")
-	String Decision;
+	private String decision = "Pas de decision" ;
+	
+	@JsonIgnore
+	@ManyToOne()
+	private User user;
 	
 }

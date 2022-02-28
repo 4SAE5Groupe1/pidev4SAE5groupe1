@@ -5,6 +5,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -45,6 +46,28 @@ public class OfferRestController {
 	public Offer modifyComplaint(@RequestBody Offer o) {
 	return offerService.updateOffer(o);
 	}
+	
+	@GetMapping("/filterOffers")
+	@ResponseBody
+	public List<Offer> FilterOffersByDomain (String domainOffer){
+		 domainOffer="TIC";
+		 return offerService.FilterDomain(domainOffer);
+		 }
+	
+	@PostMapping(value="/increaseLike/{idOffer}/{nomUser}")
+	@ResponseBody
+	public  Offer  IncreaseLike(@PathVariable("idOffer")Long idOffer,@PathVariable("nomUser")String nomUser)
+	{
+	return 	offerService.IncreaseLike(idOffer, nomUser);
+	}
+
+   @DeleteMapping(value="/decreaseLike/{idOffer}/{nomUser}")
+   @ResponseBody
+   public  Offer  DecreaseLike(@PathVariable("idOffer")Long idOffer,@PathVariable("nomUser")String nomUser)
+  {
+	return offerService.DecreaseLike(idOffer, nomUser);
+  }
+
 	
 	
 }

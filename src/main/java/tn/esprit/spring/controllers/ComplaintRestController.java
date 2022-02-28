@@ -1,8 +1,14 @@
 package tn.esprit.spring.controllers;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.messaging.handler.annotation.MessageMapping;
+import org.springframework.messaging.handler.annotation.Payload;
+import org.springframework.messaging.handler.annotation.SendTo;
+import org.springframework.messaging.simp.SimpMessageHeaderAccessor;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -14,6 +20,8 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import tn.esprit.spring.entities.Complaint;
+import tn.esprit.spring.entities.Message;
+import tn.esprit.spring.entities.Offer;
 import tn.esprit.spring.services.IServiceComplaint;
 
 @RestController
@@ -22,10 +30,10 @@ public class ComplaintRestController {
 	@Autowired
 	IServiceComplaint complaintService;
 	
-	@PostMapping("/addComplaint")
+	@PostMapping("/addComplaint/{idUser}")
 	@ResponseBody
-	public void addComplaint(@RequestBody Complaint complaint){
-		complaintService.addComplaint(complaint);
+	public void addComplaint(@RequestBody Complaint complaint,@PathVariable("idUser") Long idUser){
+		complaintService.addComplaint(complaint,idUser);
 	}
 	
 	@GetMapping("/getComplaints")
@@ -34,10 +42,10 @@ public class ComplaintRestController {
 		 return complaintService.getAllComplaints();
 		 }
 	
-	@DeleteMapping("/deleteComplaint/{idComplaint}")
+	@DeleteMapping("/deleteComplaint")
 	@ResponseBody
 	
-	public void removeStock(@RequestBody Complaint c) {
+	public void removeComplaint(@RequestBody Complaint c) {
 		
 		complaintService.deleteComplaint(c.getIdComplaint());
 	}
@@ -48,4 +56,23 @@ public class ComplaintRestController {
 	return complaintService.updateComplaint(c);
 	}
 	
+	@GetMapping("/filterComplaints")
+	@ResponseBody
+	public List<Complaint> FilterComplaintsByComplaint (String decisionComplaint){
+		 decisionComplaint="Pas de decision";
+		 return complaintService.FilterDecision(decisionComplaint);
+		 }
+	
+	@MessageMapping("/chat.register")
+	@SendTo("/topic/public")
+	public Message register(@Payload Message chatMessage, SimpMessageHeaderAccessor headerAccessor) {
+		headerAccessor.getSessionAttributes().put("username", chatMessage.getSender());
+		return chatMessage;
+	}
+
+	@MessageMapping("/chat.send")
+	@SendTo("/topic/public")
+	public Message sendMessage(@Payload Message chatMessage) {
+		return chatMessage;
+	}
 }

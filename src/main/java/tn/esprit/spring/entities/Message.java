@@ -1,50 +1,40 @@
 package tn.esprit.spring.entities;
 
-
 import java.io.Serializable;
-import java.util.Date;
-
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
-import lombok.AccessLevel;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import lombok.ToString;
-import lombok.experimental.FieldDefaults;
 
 @Entity
 @Getter
 @Setter
+@Builder
+@AllArgsConstructor
 @NoArgsConstructor
-@ToString
-@FieldDefaults(level = AccessLevel.PRIVATE)
 @Table(name = "Message")
 public class Message implements Serializable {
+
 	
-	/**
-	 * 
-	 */
-	private static final long serialVersionUID = 1L;
+	private String content;
+	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	long id;
-	@Column(name="body")
-	 String body;
-	@Column(name="date")
-	 Date date;	
+	@Column(name="idMessage")
+	private String sender;
+	 private MessageType type;
+
+	public enum MessageType {
+		CHAT, LEAVE, JOIN
+	} 
 	
-	@ManyToOne
-	private User sender;
-
-	@ManyToOne
-	private User receiver;
-
 }

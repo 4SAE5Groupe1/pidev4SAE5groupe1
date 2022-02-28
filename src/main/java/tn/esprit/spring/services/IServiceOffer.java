@@ -13,5 +13,11 @@ public void addOffer(Offer offer);
 	public void deleteOffer(Long idOffer);
 	
 	public Offer updateOffer(Offer offer);
+	
+	public List<Offer> FilterDomain(String domainOffer);
+	
+	public  Offer   IncreaseLike(Long idOffer ,String nomUser );
+	
+	public  Offer DecreaseLike(Long idOffer, String nomUser);
 
 }
