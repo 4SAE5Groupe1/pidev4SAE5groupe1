@@ -36,7 +36,7 @@ public ResponseEntity<List<Categorieevent>> listdesCategorieevent(){
 }
 
 //modifier categorie :
-@PutMapping("/modifiercategorieevent/{id}")
+@PutMapping("/modifiercategorieevent")
 public ResponseEntity<Categorieevent> updatecategorieevent(Categorieevent categorieevent){
     System.out.println(categorieevent);
     Categorieevent result = categorieEventService.saveOrUpdateCategrorie(categorieevent);
@@ -44,8 +44,8 @@ public ResponseEntity<Categorieevent> updatecategorieevent(Categorieevent catego
 }
 
 // recherche de categorie apr id :
-@GetMapping("/listdesrayon/{id}")
-public ResponseEntity<Categorieevent> getrayonByid(@PathVariable Integer id){
+@GetMapping("/listdescategories/{id}")
+public ResponseEntity<Categorieevent> getcategorieByid(@PathVariable Integer id){
 
     Categorieevent result = categorieEventService.getcategorieById(id);
     return new ResponseEntity<>(result , HttpStatus.OK);

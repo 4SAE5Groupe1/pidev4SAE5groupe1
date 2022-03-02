@@ -1,6 +1,9 @@
 package tn.esprit.spring.entites;
 import javax.persistence.*;
 
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -17,6 +20,7 @@ import java.util.Set;
 @AllArgsConstructor
 @NoArgsConstructor
 @ToString
+
 public class Event implements Serializable {
     /**
 	 * 
@@ -31,13 +35,22 @@ public class Event implements Serializable {
     private Date Startdate ;
     @Temporal(TemporalType.DATE)
     private Date EndDate ;
-    private Integer NumberParticipant ;
+    private Integer NumberParticipant  =0 ;
+    private Integer NumberParticipantMax ;
+@Enumerated
+    private TypeEvent Typeevent ;
+
     private float price ;
+    @JsonIgnore
+
     @ManyToOne
     private User user;
+
+
     @ManyToOne
 	private Categorieevent categorieevent;
-    
 
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "event")
+    private Set <ParticipationEvent>  participationEvent ;
   
 }
