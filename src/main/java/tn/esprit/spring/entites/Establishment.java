@@ -33,6 +33,7 @@ public class Establishment implements Serializable{
 	private String address;	
 	private int maxNumberPlaces;
     private int phone;
+    private String Email;
     @OneToOne(mappedBy="establishment")
     private Candidacy candidacy;
 	

@@ -41,7 +41,8 @@ public class Candidacy implements Serializable{
 	private String description;	
 	@Temporal (TemporalType.DATE)
 	private Date date;
-	private int idEstablishment;
+	@Enumerated(EnumType.STRING)
+	private Nationality nationality;
 	@ManyToOne
 	private User user;
 	@OneToOne

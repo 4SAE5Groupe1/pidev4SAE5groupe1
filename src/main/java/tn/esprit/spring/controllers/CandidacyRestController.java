@@ -1,19 +1,29 @@
 package tn.esprit.spring.controllers;
 
+import java.io.IOException;
+import java.util.Date;
 import java.util.List;
 
+import javax.mail.MessagingException;
+
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.multipart.MultipartFile;
 
 import tn.esprit.spring.entites.Candidacy;
+import tn.esprit.spring.entites.Nationality;
+import tn.esprit.spring.services.EmailSenderService;
+import tn.esprit.spring.services.FileUploadService;
 import tn.esprit.spring.services.ICandidacy;
 
 
@@ -23,6 +33,11 @@ import tn.esprit.spring.services.ICandidacy;
 public class CandidacyRestController {
 	@Autowired
 	ICandidacy candidacyService;
+	@Autowired
+	private EmailSenderService service;
+	@Autowired
+	FileUploadService uploadFile;
+
 
 	// http://localhost:8081/SpringMVC/candidacy/retrieve-all-candidacys
 
@@ -46,9 +61,28 @@ public class CandidacyRestController {
 
 	@PostMapping("/add-candidacy")
 	@ResponseBody
-	public Candidacy addCandidacy(@RequestBody Candidacy c){
+	public Candidacy addCandidacy(@RequestBody Candidacy c) throws MessagingException{
 
 			Candidacy candidacy = candidacyService.addCandidacy(c);
+			service.sendEmailWithAttachment("jlidi.achref@esprit.tn",
+					"Madame Monsieur"
+					+ " Je suis actuellement étudiant (ou élève) en (précisez la formation, la classe)."
+							
+					
+					+ "Je souhaite orienter mon avenir professionnel vers le métier de (précisez).Ce métier me plaît particulièrement en raison de (précisez)."
+					+ " J’ai d’ailleurs effectué des stages (ou rencontré des professionnels ou toutes autres expérience justifiant de cet intérêt) dans ce domaine afin de mieux le connaître, et de me rendre compte des qualités qu’il nécessite : (précisez ces qualités)."
+					
+					+ "Or, j’ai lu avec intérêt la plaquette de présentation (ou parcouru le site Internet) de votre formation et je pense qu’elle pourrait me permettre d’atteindre mon objectif professionnel grâce aux enseignements qu’elle dispense : (précisez)."
+					
+					+ "Je souhaiterais donc intégrer votre établissement à la rentrée scolaire (précisez l’année)."
+					
+					
+					+ "Je me tiens à votre disposition pour toutes information complémentaire.En vous remerciant d’avance, je vous prie d’agréer, Madame, Monsieur, mes respectueuses salutations."
+					
+					
+					+ "Signature",
+					"Candidature à Esprit",
+					"C:\\Users\\Achref\\Desktop\\pidev\\src\\upload\\uploadresume.pdf");
 			return candidacy;
 		
 			}
@@ -71,4 +105,18 @@ public class CandidacyRestController {
 
 				return candidacyService.updateCandidacy(candidacy);
 			}
+	
+	// http://localhost:8081/SpringMVC/candidacy/upload-cv
+	@PostMapping("/upload-cv")
+	@ResponseBody
+	public void uploadFile(@RequestParam("file") MultipartFile file) throws IllegalStateException, IOException{
+		uploadFile.uploadFile(file);
+			}
+	//http://localhost:8081/SpringMVC/candidacy/FiltrerCandidacyByDateAndNationality/{nat}/{d}
+		
+	@GetMapping("/FiltrerCandidacyByDateAndNationality/{nat}/{d}")
+	@ResponseBody
+    public int FiltrerCandidacyByDateAndNationality(@PathVariable Nationality nat, @PathVariable @DateTimeFormat(pattern = "yyyy-MM-dd") Date d){
+    	return candidacyService.FiltrerCandidacyByDateAndNationality(nat, d); 
+    }
 }

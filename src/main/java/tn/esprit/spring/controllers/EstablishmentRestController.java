@@ -2,6 +2,8 @@ package tn.esprit.spring.controllers;
 
 import java.util.List;
 
+import javax.validation.Valid;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -13,15 +15,24 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import tn.esprit.spring.services.Service;
+import tn.esprit.spring.services.SmsRequest;
 import tn.esprit.spring.entites.Establishment;
 import tn.esprit.spring.services.IEstablishment;
 
 @RestController
 @RequestMapping("/establishment")
 public class EstablishmentRestController {
+	 private final Service service;
+
+	    @Autowired
+	    public EstablishmentRestController(Service service) {
+	        this.service = service;
+	    }
+
+	    
 	@Autowired
 	IEstablishment establishmentService;
-
 	// http://localhost:8081/SpringMVC/establishment/retrieve-all-establishments
 
 	@GetMapping("/retrieve-all-establishments")
@@ -69,4 +80,9 @@ public class EstablishmentRestController {
 
 				return establishmentService.updateEstablishment(establishment);
 			}
+	// http://localhost:8081/SpringMVC/establishment/sendSMS
+	    @PostMapping("/sendSMS")
+	    public void sendSms(@Valid @RequestBody SmsRequest smsRequest) {
+	        service.sendSms(smsRequest);
+	    }
 }

@@ -10,4 +10,6 @@ public interface IEstablishment {
 	void deleteEstablishment(int id);
 	Establishment updateEstablishment(Establishment c);
 	Establishment retriveEstablishment(int id);
+	void NotifyCandidacyBySMS();
+	
 }

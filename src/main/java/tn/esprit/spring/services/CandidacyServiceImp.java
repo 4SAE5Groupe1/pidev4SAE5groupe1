@@ -1,11 +1,13 @@
 package tn.esprit.spring.services;
 
+import java.util.Date;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import tn.esprit.spring.entites.Candidacy;
+import tn.esprit.spring.entites.Nationality;
 import tn.esprit.spring.repositorys.CandidacyRepository;
 
 
@@ -47,5 +49,11 @@ public class CandidacyServiceImp implements ICandidacy{
 		// TODO Auto-generated method stub
 		Candidacy candidacy = candidacyRepository.findById(id).orElse(null);
 		return candidacy;
+	}
+
+	@Override
+	public int FiltrerCandidacyByDateAndNationality(Nationality nat, Date d) {
+		// TODO Auto-generated method stub
+		return this.candidacyRepository.FiltrerCandidacyByDateAndNationality(nat, d);
 	}
 }

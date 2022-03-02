@@ -3,13 +3,17 @@ package tn.esprit.spring.services;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
+
 import tn.esprit.spring.entites.Establishment;
+
 import tn.esprit.spring.repositorys.EstablishmentRepository;
 
 @Service
 public class EstablishmentServiceImp implements IEstablishment{
+
 	@Autowired
 	EstablishmentRepository establishmentRepository;
 
@@ -45,5 +49,11 @@ public class EstablishmentServiceImp implements IEstablishment{
 		// TODO Auto-generated method stub
 		Establishment establishment = establishmentRepository.findById(id).orElse(null);
 		return establishment;
+	}
+	
+	@Override
+	public void NotifyCandidacyBySMS() {
+	    
+
 	}
 }
