@@ -24,7 +24,4 @@ public class Role implements Serializable {
         private int id;
         @Enumerated(EnumType.STRING)
         private RoleName role;
-        @ManyToMany(mappedBy="roles", cascade = CascadeType.PERSIST, fetch
-                = FetchType.EAGER)
-        private Set<User> Users;
 }

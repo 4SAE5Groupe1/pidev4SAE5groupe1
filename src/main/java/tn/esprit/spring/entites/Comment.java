@@ -43,8 +43,8 @@ public class Comment implements Serializable {
 	@Column(name="date")
 	 Date date;	
 	@ManyToOne
-	private Publication publication;
+	Publication publication;
 	@ManyToOne
-	private User user;
+	User user;
 
 }

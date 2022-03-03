@@ -1,6 +1,5 @@
 package tn.esprit.spring.entites;
 
-
 import java.io.Serializable;
 import java.util.Date;
 
@@ -25,28 +24,28 @@ import lombok.experimental.FieldDefaults;
 @NoArgsConstructor
 @ToString
 @FieldDefaults(level = AccessLevel.PRIVATE)
-@Table(name = "PublicationRating")
-public class PublicationRating implements Serializable {
+@Table(name = "Rating")
+public class Rating implements Serializable {
+	
 	/**
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
-
+	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	long id;
 	
-	@Column(name="nb_stars")
-	 int nb_stars;
+	@Column(name="nbStars")
+	 int nbStars;
 	
 	@Column(name="date")
-	 Date date;	
+	 Date date;
+	
 	@ManyToOne
 	private Publication publication;
 	
 	@ManyToOne
 	private User user;
-	
-	
-	
+
 }

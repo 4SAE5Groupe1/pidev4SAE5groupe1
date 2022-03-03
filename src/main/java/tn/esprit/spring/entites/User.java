@@ -23,13 +23,16 @@ public class User implements Serializable {
 	private static final long serialVersionUID = 1L;
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
-	private int id;
+	private long id;
 	private String userName;
 	private String email;
 	private String password;
 	private String name;
 	private String lastName;
 	private Boolean active;
+	private int age;
+	private String country;
+	
 	@ManyToMany(cascade = CascadeType.PERSIST, fetch = FetchType.EAGER)
 	private Set<Role> roles;
 	@OneToMany(cascade = CascadeType.ALL, mappedBy = "user")
@@ -46,5 +49,6 @@ public class User implements Serializable {
 	private Set<Donation> donations;
 	@OneToMany(cascade = CascadeType.ALL, mappedBy = "user")
 	private Set<Candidacy> candidacies;
+	//
 
 }
