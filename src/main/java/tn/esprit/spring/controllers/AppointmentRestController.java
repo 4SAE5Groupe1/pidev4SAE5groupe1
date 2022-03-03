@@ -17,7 +17,9 @@ import com.google.zxing.WriterException;
 
 import tn.esprit.spring.entities.QRCodeGenerator;
 import tn.esprit.spring.entities.Appointment;
+import tn.esprit.spring.entities.Expert;
 import tn.esprit.spring.services.IServiceAppointment;
+import tn.esprit.spring.services.IServiceExpert;
 
 @RestController
 public class AppointmentRestController {
@@ -25,14 +27,17 @@ public class AppointmentRestController {
 	@Autowired
 	IServiceAppointment appointmentService;
 	
+	@Autowired
+	IServiceExpert expertService;
+	
 	private static final String QR_CODE_IMAGE_PATH = "./src/main/resources/QRCode.png";
 	
-	@PostMapping("/addAppointment/{idUser}")
+	@PostMapping("/addAppointment/{idUser}/{idExpert}")
 	@ResponseBody
-	public Appointment addAppointment(@RequestBody Appointment appointment , @PathVariable("idUser") Long idUser )throws WriterException, IOException {
+	public Appointment addAppointment(@RequestBody Appointment appointment , @PathVariable("idUser") Long idUser , @PathVariable("idExpert") Long idExpert )throws WriterException, IOException {
 		
 		
-		return appointmentService.addAppointment(appointment , idUser);
+		return appointmentService.addAppointment(appointment , idUser , idExpert);
 		
 		//appointmentService.generateQRCodeImage(appointment.getEmail(), 350, 350, QR_CODE_IMAGE_PATH);
 	
@@ -55,7 +60,26 @@ public class AppointmentRestController {
 		 return appointmentService.getAllAppointments();
 		 }
 	
-	@DeleteMapping("/deleteAppointment/{idAppointment}")
+	@GetMapping("/getExperts")
+	@ResponseBody
+	public List<Expert> getAllExperts (){
+		 return expertService.getAllExperts();
+		 }
+	@PostMapping("/addExpert")
+	@ResponseBody
+	public void addExpert (@RequestBody Expert expert){
+		 expertService.addExpert(expert);
+		 }
+	
+	/* @DeleteMapping("/deleteAppointment/{idAppointment}")
+	@ResponseBody
+	
+	public void removeAppointment(@RequestBody Appointment a) {
+		
+		appointmentService.deleteAppointment(a.getIdAppointment());
+	} */
+	
+	@DeleteMapping("/deleteAppointment")
 	@ResponseBody
 	
 	public void removeAppointment(@RequestBody Appointment a) {

@@ -2,15 +2,18 @@ package tn.esprit.spring.services;
 
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
+import java.nio.charset.StandardCharsets;
 import java.nio.file.FileSystems;
 import java.nio.file.Path;
 import java.util.List;
 
 import javax.mail.Message;
+import javax.mail.MessagingException;
 import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeMessage;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.io.ByteArrayResource;
 import org.springframework.core.io.FileSystemResource;
 import org.springframework.mail.MailException;
 import org.springframework.mail.SimpleMailMessage;
@@ -27,9 +30,11 @@ import com.google.zxing.qrcode.QRCodeWriter;
 
 //import tn.esprit.spring.QRCodeGenerator;
 import tn.esprit.spring.entities.Appointment;
+import tn.esprit.spring.entities.Expert;
 import tn.esprit.spring.entities.QRCodeGenerator;
 import tn.esprit.spring.entities.User;
 import tn.esprit.spring.repositories.AppointmentRepository;
+import tn.esprit.spring.repositories.ExpertRepository;
 import tn.esprit.spring.repositories.UserRepository;
 
 /* import java.io.ByteArrayOutputStream;
@@ -58,27 +63,62 @@ public class AppointmentServiceImp implements IServiceAppointment {
 	
 	@Autowired
 	UserRepository userRepository;
+	
+	@Autowired
+	ExpertRepository expertRepository ;
+	
 	private static final String QR_CODE_IMAGE_PATH = "./src/main/resources/QRCode.png"; 
 	
 	@Override
-	public Appointment addAppointment(Appointment appointment , Long idUser) throws WriterException, IOException  {
+	public Appointment addAppointment(Appointment appointment , Long idUser , Long idExpert) throws WriterException, IOException  {
 		
 		String codeText = appointment.getEmail();
 		
 		appointmentRepository.save(appointment);
 		
 		User user = userRepository.findById(idUser).orElse(null);
+		Expert expert = expertRepository.findById(idExpert).orElse(null);
 		appointment.setUser(user);
+		appointment.setExpert(expert);
 		appointmentRepository.save(appointment);
 		
-       SimpleMailMessage message = new SimpleMailMessage();
+       //SimpleMailMessage message = new SimpleMailMessage();
+       MimeMessage message = javaMailSender.createMimeMessage() ;
 		
-		message.setFrom("nadia.wanness@esprit.tn");
+		/*  message.setFrom("nadia.wanness@esprit.tn");
 		message.setTo(appointment.getEmail());
 		message.setSubject("You have an appointment");
-		message.setText("Hello Mr/Mrs we have to comfirm that you have an appointment with Dr "+ appointment.getExpert() + " on "+ "date" + appointment.getDate()
+		message.setText("Hello Mr/Mrs we have to confirm that you have an appointment with Dr "  + appointment.getExpert() +  " on "+ "date" + appointment.getDate()
 		+ "This is your QRCode " +  QRCodeGenerator.getQRCodeImage(codeText, 350, 350)
-		);
+		
+		); */
+       
+      
+       
+		/* MimeMessageHelper helper = new MimeMessageHelper(message, MimeMessageHelper.MULTIPART_MODE_MIXED_RELATED,
+				StandardCharsets.UTF_8.name() 
+				); */
+		
+		 try {
+			 MimeMessageHelper helper = new MimeMessageHelper(message, MimeMessageHelper.MULTIPART_MODE_MIXED_RELATED,
+						StandardCharsets.UTF_8.name() 
+						);
+			helper.setFrom("nadia.wanness@esprit.tn");
+			helper.setTo(appointment.getEmail());
+			helper.setSubject("You have an appointment");
+			helper.setText("Hello Mr/Mrs we have to confirm that you have an appointment with Dr "  + appointment.getExpert().getNomExpert() +  " on "+ "date" + appointment.getDate()
+			+ "This is your QRCode " 
+			
+			);
+			
+			 helper.addAttachment("qrCode.png",  new ByteArrayResource(QRCodeGenerator.getQRCodeImage(appointment.getEmail(), 350, 350)));
+			
+		} catch (MessagingException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
+		
+		
 		
 		javaMailSender.send(message); 
 		
@@ -91,6 +131,7 @@ public class AppointmentServiceImp implements IServiceAppointment {
 		return appointment;
 		
 	}
+	
 
 	@Override
 	public List<Appointment> getAllAppointments() {

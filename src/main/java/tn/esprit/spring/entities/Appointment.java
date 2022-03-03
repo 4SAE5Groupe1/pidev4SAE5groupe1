@@ -37,13 +37,19 @@ public class Appointment implements Serializable{
 	private Date Date;
 	@Column(name="emailAppointment")
 	private String Email; 
-	@Column(name="ExpertAppointment")
-	private String Expert; 
+	
+	/* @Column(name="ExpertAppointment")
+	private String Expert; */
+	
+	
 	/*@Column(name="codeQrAuthentif")
 	private String codeQrAuthentif ; */
 	
 	@JsonIgnore
 	@ManyToOne()
 	private User user;
+	@JsonIgnore
+	@ManyToOne()
+	private Expert expert;
 	
 }

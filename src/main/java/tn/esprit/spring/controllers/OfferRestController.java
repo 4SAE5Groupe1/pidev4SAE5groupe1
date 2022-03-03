@@ -33,13 +33,21 @@ public class OfferRestController {
 		 return offerService.getAllOffers();
 		 }
 	
-	@DeleteMapping("/deleteOffer/{idOffer}")
+	/* @DeleteMapping("/deleteOffer/{idOffer}")
 	@ResponseBody
 	
 	public void removeOffer(@RequestBody Offer o) {
 		
 		offerService.deleteOffer(o.getIdOffer());
-	}
+	} */
+	
+	@DeleteMapping("/deleteOffer")
+	@ResponseBody
+	
+	public void removeOffer(@RequestBody Offer o) {
+		
+		offerService.deleteOffer(o.getIdOffer());
+	} 
 	
 	@PutMapping("/modifyOffer/{idOffer}")
 	@ResponseBody
@@ -51,6 +59,7 @@ public class OfferRestController {
 	@ResponseBody
 	public List<Offer> FilterOffersByDomain (String domainOffer){
 		 domainOffer="TIC";
+		 //domainOffer="Medical";
 		 return offerService.FilterDomain(domainOffer);
 		 }
 	

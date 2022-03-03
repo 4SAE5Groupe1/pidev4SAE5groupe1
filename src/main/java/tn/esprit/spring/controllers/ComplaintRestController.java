@@ -60,6 +60,8 @@ public class ComplaintRestController {
 	@ResponseBody
 	public List<Complaint> FilterComplaintsByComplaint (String decisionComplaint){
 		 decisionComplaint="Pas de decision";
+		 //decisionComplaint="Traité";
+		 //decisionComplaint="En cours";
 		 return complaintService.FilterDecision(decisionComplaint);
 		 }
 	

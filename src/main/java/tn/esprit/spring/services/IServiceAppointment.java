@@ -10,7 +10,7 @@ import tn.esprit.spring.entities.Appointment;
 
 public interface IServiceAppointment {
 
-	public  Appointment addAppointment(Appointment appointment , Long idUser) throws WriterException, IOException   ;
+	public  Appointment addAppointment(Appointment appointment , Long idUser , Long idExpert) throws WriterException, IOException   ;
 	
 	public List<Appointment> getAllAppointments ();
 
