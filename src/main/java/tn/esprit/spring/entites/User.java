@@ -48,4 +48,5 @@ public class User implements Serializable {
 	private Set<Candidacy> candidacies;
 	@OneToMany(cascade = CascadeType.ALL, mappedBy = "user")
 	private Set <ParticipationEvent>  participationEvent ;
+
 }
