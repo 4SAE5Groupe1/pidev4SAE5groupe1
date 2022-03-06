@@ -9,7 +9,10 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -39,8 +42,11 @@ public class Offer implements Serializable{
 	private String Description;
 	@Column(name="likeOffer")
 	private int Like = 0 ;
-	@ElementCollection(targetClass=String.class)
+	@ElementCollection(targetClass=Long.class)
 	// a changer vers String !! 
-	private Set<String>likesUsers;
+	private Set<Long>likesUsers;
 	
+	@JsonIgnore
+	@ManyToOne()
+	private User user;
 }

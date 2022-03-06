@@ -16,8 +16,8 @@ public void addOffer(Offer offer);
 	
 	public List<Offer> FilterDomain(String domainOffer);
 	
-	public  Offer   IncreaseLike(Long idOffer ,String nomUser );
+	public  Boolean   IncreaseLike(Long idOffer ,Long idUser );
 	
-	public  Offer DecreaseLike(Long idOffer, String nomUser);
+	public  Boolean   DecreaseLike(Long idOffer ,Long idUser );
 
 }

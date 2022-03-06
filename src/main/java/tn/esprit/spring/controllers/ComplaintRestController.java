@@ -59,9 +59,9 @@ public class ComplaintRestController {
 	@GetMapping("/filterComplaints")
 	@ResponseBody
 	public List<Complaint> FilterComplaintsByComplaint (String decisionComplaint){
-		 decisionComplaint="Pas de decision";
+		 //decisionComplaint="Pas de decision";
 		 //decisionComplaint="Traité";
-		 //decisionComplaint="En cours";
+		 decisionComplaint="En cours";
 		 return complaintService.FilterDecision(decisionComplaint);
 		 }
 	

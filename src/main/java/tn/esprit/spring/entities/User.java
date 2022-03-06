@@ -41,4 +41,7 @@ public class User implements Serializable {
 	@OneToMany(cascade = CascadeType.ALL, mappedBy = "user")
 	private Set<Appointment> appointments;
 	
+	@OneToMany(cascade = CascadeType.ALL, mappedBy = "user")
+	private Set<Offer> offers;
+	
 }

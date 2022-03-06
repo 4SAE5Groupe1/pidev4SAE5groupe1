@@ -63,18 +63,18 @@ public class OfferRestController {
 		 return offerService.FilterDomain(domainOffer);
 		 }
 	
-	@PostMapping(value="/increaseLike/{idOffer}/{nomUser}")
+	@PostMapping(value="/increaseLike/{idOffer}/{idUser}")
 	@ResponseBody
-	public  Offer  IncreaseLike(@PathVariable("idOffer")Long idOffer,@PathVariable("nomUser")String nomUser)
+	public  Boolean  IncreaseLike(@PathVariable("idOffer")Long idOffer,@PathVariable("idUser")Long idUser)
 	{
-	return 	offerService.IncreaseLike(idOffer, nomUser);
+	return 	offerService.IncreaseLike(idOffer, idUser);
 	}
 
-   @DeleteMapping(value="/decreaseLike/{idOffer}/{nomUser}")
+   @DeleteMapping(value="/decreaseLike/{idOffer}/{idUser}")
    @ResponseBody
-   public  Offer  DecreaseLike(@PathVariable("idOffer")Long idOffer,@PathVariable("nomUser")String nomUser)
+   public  Boolean  DecreaseLike(@PathVariable("idOffer")Long idOffer,@PathVariable("idUser") Long idUser)
   {
-	return offerService.DecreaseLike(idOffer, nomUser);
+	return offerService.DecreaseLike(idOffer, idUser);
   }
 
 	
