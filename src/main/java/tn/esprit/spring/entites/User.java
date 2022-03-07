@@ -22,7 +22,7 @@ public class User implements Serializable {
 	 */
 	private static final long serialVersionUID = 1L;
 	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int id;
 	private String userName;
 	private String email;
@@ -46,5 +46,11 @@ public class User implements Serializable {
 	private Set<Donation> donations;
 	@OneToMany(cascade = CascadeType.ALL, mappedBy = "user")
 	private Set<Candidacy> candidacies;
+	@OneToMany(cascade = CascadeType.ALL, mappedBy = "user")
+	private Set<ResponseLearner> ResponseLearners;
+    @OneToOne(mappedBy = "user")
+    private  Feedback Feedback;
+	@OneToMany(cascade = CascadeType.ALL, mappedBy="user")
+	private Set<Result> results ;
 
 }

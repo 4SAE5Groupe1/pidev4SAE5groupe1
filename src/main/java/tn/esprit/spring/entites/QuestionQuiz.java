@@ -9,6 +9,8 @@ import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -29,13 +31,19 @@ public class QuestionQuiz implements Serializable{
 	private static final long serialVersionUID = 1L;
 	@Id
 	@GeneratedValue (strategy = GenerationType.IDENTITY)
-	private int questionResponseQuizId ;
+	private int questionId ;
 	private String questionBody ;
-	@OneToOne
-	private ResponseQuiz responseQuiz;
-	@OneToOne
+	private String option1 ;
+	private String option2 ;
+	private String option3 ;
+	private String CorrectResponse ;
+	
+//	@OneToOne
+//	private ResponseQuiz responseQuiz;
+	@OneToOne(mappedBy="questionQuiz")
 	private ResponseLearner responseLearner;
 	@ManyToOne
+	@JsonIgnore
 	private Quiz quiz;
 
 

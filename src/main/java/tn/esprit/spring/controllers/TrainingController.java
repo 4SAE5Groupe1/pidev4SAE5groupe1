@@ -55,8 +55,24 @@ public class TrainingController {
 	// http://localhost:8081/SpringMVC/remove-Training/
 	@DeleteMapping("/remove-Training/{Training-id}")
 	@ResponseBody
-	public void removeClient(@PathVariable("Training-id") int TrainingId) {
+	public void removeTraining(@PathVariable("Training-id") int TrainingId) {
 		TrainingService.DeleteTraining(TrainingId);
+	}
+	
+	// http://localhost:8081/SpringMVC/add-ListeTrainings/{idUser}
+	@PostMapping("/add-ListeTrainings/{idUser}")
+	@ResponseBody
+	public void ajouterEtaffecterListeTraining(@RequestBody List<Training> lt,@PathVariable("idUser") int idUser)
+	{
+		TrainingService.ajouterEtaffecterTrainingToTrainer(lt, idUser);
+	}
+	
+	// http://localhost:8081/SpringMVC/add-ListeTrainings/{idUser}
+	@PostMapping("/affecterTrainingToTrainer/{idUser}")
+	@ResponseBody
+	public void affecterTrainingToTrainer(@RequestBody Training training,@PathVariable("idUser") int idUser)
+	{
+		TrainingService.affecterTrainingToTrainer(training, idUser);
 	}
 
 }

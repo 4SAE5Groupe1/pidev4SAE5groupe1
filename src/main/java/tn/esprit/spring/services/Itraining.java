@@ -15,4 +15,9 @@ public interface Itraining {
 	Training retriveTraining(int t);
 	
 	void DeleteTraining(int t);
+
+
+	public void ajouterEtaffecterTrainingToTrainer(List<Training> lt, int iduser);
+	
+	public void affecterTrainingToTrainer(Training training, int iduser);
 }

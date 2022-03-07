@@ -1,12 +1,15 @@
 package tn.esprit.spring.entites;
 
 import java.io.Serializable;
+import java.util.Date;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -20,7 +23,7 @@ import lombok.ToString;
 @AllArgsConstructor
 @NoArgsConstructor
 @ToString
-public class feedback implements Serializable{
+public class Feedback implements Serializable{
 
 	/**
 	 * 
@@ -29,7 +32,12 @@ public class feedback implements Serializable{
 	@Id
 	@GeneratedValue (strategy = GenerationType.IDENTITY)
 	private int feedbackid ;
-	private String body ; 
+	private String feedbackbody ; 
+	private Date dateFeedback ;
 	@ManyToOne
+	@JsonIgnore
 	private Training training ;
+    @ManyToOne
+    @JsonIgnore
+    private User user;
 }
