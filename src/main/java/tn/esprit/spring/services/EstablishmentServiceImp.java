@@ -6,9 +6,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
-
+import tn.esprit.spring.entites.Candidacy;
 import tn.esprit.spring.entites.Establishment;
-
+import tn.esprit.spring.entites.Status;
 import tn.esprit.spring.repositorys.EstablishmentRepository;
 
 @Service
@@ -56,4 +56,23 @@ public class EstablishmentServiceImp implements IEstablishment{
 	    
 
 	}
+	
+	@Override
+	public List<Establishment> FiltrerEstablishmentByName(String name) {
+		// TODO Auto-generated method stub
+		return this.establishmentRepository.FiltrerEstablishmentByName(name);
+	}
+	
+	@Override
+	public List<Establishment> FiltrerEstablishmentBydomain(String domain) {
+		// TODO Auto-generated method stub
+		return this.establishmentRepository.FiltrerEstablishmentBydomain(domain);
+	}
+	
+	@Override
+	public List<Establishment> FiltrerEstablishmentByaddress(String address) {
+		// TODO Auto-generated method stub
+		return this.establishmentRepository.FiltrerEstablishmentByaddress(address);
+	}
+	
 }

@@ -11,5 +11,8 @@ public interface IEstablishment {
 	Establishment updateEstablishment(Establishment c);
 	Establishment retriveEstablishment(int id);
 	void NotifyCandidacyBySMS();
+	List<Establishment> FiltrerEstablishmentByName(String name);
+	List<Establishment> FiltrerEstablishmentBydomain(String domain);
+	List<Establishment> FiltrerEstablishmentByaddress(String address);
 	
 }

@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 
 import tn.esprit.spring.entites.Candidacy;
 import tn.esprit.spring.entites.Nationality;
+import tn.esprit.spring.entites.Status;
 import tn.esprit.spring.repositorys.CandidacyRepository;
 
 
@@ -56,4 +57,10 @@ public class CandidacyServiceImp implements ICandidacy{
 		// TODO Auto-generated method stub
 		return this.candidacyRepository.FiltrerCandidacyByDateAndNationality(nat, d);
 	}
+	@Override
+	public List<Candidacy> FiltrerCandidacyByStatus(Status status) {
+		// TODO Auto-generated method stub
+		return this.candidacyRepository.FiltrerCandidacyByStatus(status);
+	}
+
 }

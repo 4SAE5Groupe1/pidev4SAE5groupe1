@@ -25,16 +25,16 @@ public class PDFGeneratorService {
 	
  User user ;
 	
-	private static final String QR_CODE_IMAGE_PATH = ".//src//main//resources//QRCode.png";
-	public static void generateQRCodeImage(String text, int width, int height, String filePath)
-            throws IOException, WriterException {
-        QRCodeWriter qrCodeWriter = new QRCodeWriter();
-        BitMatrix bitMatrix = qrCodeWriter.encode(text, BarcodeFormat.QR_CODE, width, height);
-
-        Path path = FileSystems.getDefault().getPath(filePath);
-        MatrixToImageWriter.writeToPath(bitMatrix, "PNG", path);
-       
-    }
+//	private static final String QR_CODE_IMAGE_PATH = ".//src//main//resources//QRCode.png";
+//	public static void generateQRCodeImage(String text, int width, int height, String filePath)
+//            throws IOException, WriterException {
+//        QRCodeWriter qrCodeWriter = new QRCodeWriter();
+//        BitMatrix bitMatrix = qrCodeWriter.encode(text, BarcodeFormat.QR_CODE, width, height);
+//
+//        Path path = FileSystems.getDefault().getPath(filePath);
+//        MatrixToImageWriter.writeToPath(bitMatrix, "PNG", path);
+//       
+//    }
     public void export(HttpServletResponse response) throws IOException {
         Document document = new Document(PageSize.A4);
         PdfWriter.getInstance(document, response.getOutputStream());
@@ -55,21 +55,21 @@ public class PDFGeneratorService {
         paragraph2.setAlignment(Paragraph.ALIGN_LEFT);
         
         
-        try {
-			this.generateQRCodeImage("achref", 100, 100,".//src//main//resources//QRCode.png" );
-		} catch (WriterException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-
-        String filename = ".//src//main//resources//QRCode.png";
-        Image image = Image.getInstance(filename);
-        image.setAlignment(Image.LEFT);
+//        try {
+//			PDFGeneratorService.generateQRCodeImage("achref", 100, 100,".//src//main//resources//QRCode.png" );
+//		} catch (WriterException e) {
+//			// TODO Auto-generated catch block
+//			e.printStackTrace();
+//		}
+//
+//        String filename = ".//src//main//resources//QRCode.png";
+//        Image image = Image.getInstance(filename);
+//        image.setAlignment(Image.LEFT);
         
         
-        document.add(paragraph);
-        document.add(paragraph2);
-        document.add(image);
+        //document.add(paragraph);
+        //document.add(paragraph2);
+      //  document.add(image);
         document.close();
     }
 }

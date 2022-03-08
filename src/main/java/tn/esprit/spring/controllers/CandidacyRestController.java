@@ -22,8 +22,8 @@ import org.springframework.web.multipart.MultipartFile;
 
 import tn.esprit.spring.entites.Candidacy;
 import tn.esprit.spring.entites.Nationality;
+import tn.esprit.spring.entites.Status;
 import tn.esprit.spring.services.EmailSenderService;
-import tn.esprit.spring.services.FileUploadService;
 import tn.esprit.spring.services.ICandidacy;
 
 
@@ -35,8 +35,7 @@ public class CandidacyRestController {
 	ICandidacy candidacyService;
 	@Autowired
 	private EmailSenderService service;
-	@Autowired
-	FileUploadService uploadFile;
+
 
 
 	// http://localhost:8081/SpringMVC/candidacy/retrieve-all-candidacys
@@ -106,12 +105,7 @@ public class CandidacyRestController {
 				return candidacyService.updateCandidacy(candidacy);
 			}
 	
-	// http://localhost:8081/SpringMVC/candidacy/upload-cv
-	@PostMapping("/upload-cv")
-	@ResponseBody
-	public void uploadFile(@RequestParam("file") MultipartFile file) throws IllegalStateException, IOException{
-		uploadFile.uploadFile(file);
-			}
+
 	//http://localhost:8081/SpringMVC/candidacy/FiltrerCandidacyByDateAndNationality/{nat}/{d}
 		
 	@GetMapping("/FiltrerCandidacyByDateAndNationality/{nat}/{d}")
@@ -119,4 +113,12 @@ public class CandidacyRestController {
     public int FiltrerCandidacyByDateAndNationality(@PathVariable Nationality nat, @PathVariable @DateTimeFormat(pattern = "yyyy-MM-dd") Date d){
     	return candidacyService.FiltrerCandidacyByDateAndNationality(nat, d); 
     }
+	
+	//http://localhost:8081/SpringMVC/candidacy/FiltrerCandidacyByStatus/{statuts}
+	
+		@GetMapping("/FiltrerCandidacyByStatus/{statuts}")
+		@ResponseBody
+	    public List<Candidacy> FiltrerCandidacyByStatus(@PathVariable Status statuts){
+	    	return candidacyService.FiltrerCandidacyByStatus(statuts); 
+	    }
 }

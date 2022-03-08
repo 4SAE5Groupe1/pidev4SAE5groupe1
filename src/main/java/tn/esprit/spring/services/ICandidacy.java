@@ -5,6 +5,7 @@ import java.util.List;
 
 import tn.esprit.spring.entites.Candidacy;
 import tn.esprit.spring.entites.Nationality;
+import tn.esprit.spring.entites.Status;
 
 
 
@@ -15,4 +16,5 @@ public interface ICandidacy {
 	Candidacy updateCandidacy(Candidacy c);
 	Candidacy retriveCandidacy(int id);
 	int FiltrerCandidacyByDateAndNationality(Nationality nat, Date d);
+	List<Candidacy> FiltrerCandidacyByStatus(Status status);
 }
