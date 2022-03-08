@@ -1,5 +1,8 @@
 package tn.esprit.spring.services;
 
+
+import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import javax.transaction.Transactional;
@@ -12,6 +15,7 @@ import tn.esprit.spring.entites.Training;
 import tn.esprit.spring.entites.User;
 import tn.esprit.spring.repositories.TrainingRepo;
 import tn.esprit.spring.repositories.UserRepo;
+
 
 @Service
 public class ImpTraining implements Itraining{
@@ -93,6 +97,21 @@ public class ImpTraining implements Itraining{
 			userRepo.save(user);
 	}
 		
+	}
+
+	@Override
+	public List<Training> FiltrerTrainingBystartDate(Date d) {
+		// TODO Auto-generated method stub
+		 
+		  List<Training> list = trainingRepo.FiltrerTrainingBystartDate(d) ;
+		  return list ;
+	}
+
+	@Override
+	public List<Training> FiltrerTrainingBydomain(String d) {
+		// TODO Auto-generated method stub
+		 List<Training> list = trainingRepo.FiltrerTrainingBydomain(d);
+		  return list ;
 	}
 
 }

@@ -1,8 +1,11 @@
 package tn.esprit.spring.controllers;
 
+
+import java.util.Date;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -74,5 +77,21 @@ public class TrainingController {
 	{
 		TrainingService.affecterTrainingToTrainer(training, idUser);
 	}
-
+	
+	// http://localhost:8081/SpringMVC//FiltrerTrainingBystartDate/{d}
+	@GetMapping("/FiltrerTrainingBystartDate/{d}")
+	@ResponseBody
+	public List<Training> FiltrerTrainingBystartDate(@PathVariable @DateTimeFormat(pattern = "yyyy-MM-dd") Date d)
+	{
+		return TrainingService.FiltrerTrainingBystartDate(d);
+	}
+	
+	// http://localhost:8081/SpringMVC//FiltrerTrainingByDomaine/{d}
+	@GetMapping("/FiltrerTrainingByDomaine/{d}")
+	@ResponseBody
+	public List<Training> FiltrerTrainingByDomaine(@PathVariable("d") String d)
+	{
+		return TrainingService.FiltrerTrainingBydomain(d);
+	}
+	
 }
