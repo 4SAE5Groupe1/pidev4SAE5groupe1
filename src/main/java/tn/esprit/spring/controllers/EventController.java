@@ -1,4 +1,4 @@
-package tn.esprit.spring.controller;
+package tn.esprit.spring.controllers;
 
 import com.paypal.api.payments.Links;
 import com.paypal.api.payments.Payment;
@@ -9,8 +9,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import tn.esprit.spring.Repository.UserRepository;
-import tn.esprit.spring.Services.EventService;
+import tn.esprit.spring.repositories.UserRepository;
+import tn.esprit.spring.services.EventService;
 import tn.esprit.spring.configuration.PaypalPaymentIntent;
 import tn.esprit.spring.configuration.PaypalPaymentMethod;
 import tn.esprit.spring.configuration.URLUtils;
@@ -32,7 +32,7 @@ public class EventController {
     @Autowired
     private UserRepository userRepository;
     @Autowired
-    private tn.esprit.spring.Repository.eventrepo eventrepo ;
+    private tn.esprit.spring.repositories.eventrepo eventrepo ;
 
     @Autowired
     private EventService eventService ;

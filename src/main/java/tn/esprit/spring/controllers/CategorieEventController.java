@@ -1,10 +1,9 @@
-package tn.esprit.spring.controller;
+package tn.esprit.spring.controllers;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import tn.esprit.spring.Services.categorieEventService;
 import tn.esprit.spring.entites.Categorieevent;
 
 import java.util.List;
@@ -12,7 +11,7 @@ import java.util.List;
 @RestController
 public class CategorieEventController {
     @Autowired
-    tn.esprit.spring.Services.categorieEventService categorieEventService ;
+    tn.esprit.spring.services.categorieEventService categorieEventService ;
 
 // ajouter categorie
 @PostMapping("/addCategorieEvent")

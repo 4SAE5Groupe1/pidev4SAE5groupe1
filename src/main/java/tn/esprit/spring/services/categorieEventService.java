@@ -1,8 +1,7 @@
-package tn.esprit.spring.Services;
+package tn.esprit.spring.services;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import tn.esprit.spring.Repository.categrorieeventRepo;
 import tn.esprit.spring.entites.Categorieevent;
 
 import java.util.List;
@@ -10,7 +9,7 @@ import java.util.List;
 @Service
 public class categorieEventService {
 @Autowired
-    private tn.esprit.spring.Repository.categrorieeventRepo categrorieeventRepo ;
+    private tn.esprit.spring.repositories.categrorieeventRepo categrorieeventRepo ;
 // ajouter une categorie :
  public Categorieevent saveOrUpdateCategrorie (Categorieevent categorieevent) {
      categrorieeventRepo.save(categorieevent) ;

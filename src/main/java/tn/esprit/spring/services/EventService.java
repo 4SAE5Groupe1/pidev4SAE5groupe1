@@ -1,4 +1,4 @@
-package tn.esprit.spring.Services;
+package tn.esprit.spring.services;
 
 
 import com.paypal.api.payments.*;
@@ -13,10 +13,10 @@ import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.stereotype.Service;
 import org.springframework.ui.freemarker.FreeMarkerTemplateUtils;
-import tn.esprit.spring.Repository.DislikeRepo;
-import tn.esprit.spring.Repository.LikeRepo;
-import tn.esprit.spring.Repository.ParticipationEventRepo;
-import tn.esprit.spring.Repository.UserRepository;
+import tn.esprit.spring.repositories.DislikeRepo;
+import tn.esprit.spring.repositories.LikeRepo;
+import tn.esprit.spring.repositories.ParticipationEventRepo;
+import tn.esprit.spring.repositories.UserRepository;
 import tn.esprit.spring.configuration.MailResponse;
 import tn.esprit.spring.configuration.MailmakerConf;
 import tn.esprit.spring.configuration.PaypalPaymentIntent;
@@ -45,10 +45,10 @@ public class EventService {
     @Autowired
     private APIContext apiContext;
     @Autowired
-    private tn.esprit.spring.Repository.eventrepo eventrepo;
+    private tn.esprit.spring.repositories.eventrepo eventrepo;
     @Autowired
 
-    private tn.esprit.spring.Repository.categrorieeventRepo categrorieeventRepo;
+    private tn.esprit.spring.repositories.categrorieeventRepo categrorieeventRepo;
     @Autowired
     private ParticipationEventRepo participationEventRepo;
     @Autowired
@@ -153,7 +153,7 @@ public class EventService {
             participationEvent.setEvent(event);
             participationEvent.setUser(user);
             event.setNumberParticipant(event.getNumberParticipant() + 1);
-            ;
+
 
         }
 }
