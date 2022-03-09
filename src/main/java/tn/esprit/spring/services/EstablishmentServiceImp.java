@@ -9,7 +9,7 @@ import org.springframework.stereotype.Service;
 import tn.esprit.spring.entites.Candidacy;
 import tn.esprit.spring.entites.Establishment;
 import tn.esprit.spring.entites.Status;
-import tn.esprit.spring.repositorys.EstablishmentRepository;
+import tn.esprit.spring.repositories.EstablishmentRepository;
 
 @Service
 public class EstablishmentServiceImp implements IEstablishment{

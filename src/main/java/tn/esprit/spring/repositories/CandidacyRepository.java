@@ -1,4 +1,4 @@
-package tn.esprit.spring.repositorys;
+package tn.esprit.spring.repositories;
 
 import java.util.Date;
 import java.util.List;
@@ -12,14 +12,12 @@ import tn.esprit.spring.entites.Candidacy;
 import tn.esprit.spring.entites.Nationality;
 import tn.esprit.spring.entites.Status;;
 
-
-
 @Repository
-public interface CandidacyRepository extends JpaRepository<Candidacy, Integer>{
-	@Query("SELECT count(*) FROM Candidacy c WHERE c.nationality =:nat AND c.date =:d ") 
+public interface CandidacyRepository extends JpaRepository<Candidacy, Integer> {
+	@Query("SELECT count(*) FROM Candidacy c WHERE c.nationality =:nat AND c.date =:d ")
 	int FiltrerCandidacyByDateAndNationality(@Param("nat") Nationality nat, @Param("d") Date d);
-	
-	@Query("SELECT c FROM Candidacy c WHERE c.status =:status ") 
+
+	@Query("SELECT c FROM Candidacy c WHERE c.status =:status ")
 	List<Candidacy> FiltrerCandidacyByStatus(@Param("status") Status status);
 
 }

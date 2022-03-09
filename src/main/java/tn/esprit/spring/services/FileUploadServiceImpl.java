@@ -6,7 +6,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
 import tn.esprit.spring.entites.UploadedFile;
-import tn.esprit.spring.repositorys.FileUploadRepository;
+import tn.esprit.spring.repositories.FileUploadRepository;
 
 import java.io.IOException;
 import java.nio.file.Files;

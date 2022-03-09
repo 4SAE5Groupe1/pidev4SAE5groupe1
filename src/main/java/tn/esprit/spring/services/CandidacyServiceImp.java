@@ -9,7 +9,7 @@ import org.springframework.stereotype.Service;
 import tn.esprit.spring.entites.Candidacy;
 import tn.esprit.spring.entites.Nationality;
 import tn.esprit.spring.entites.Status;
-import tn.esprit.spring.repositorys.CandidacyRepository;
+import tn.esprit.spring.repositories.CandidacyRepository;
 
 
 
