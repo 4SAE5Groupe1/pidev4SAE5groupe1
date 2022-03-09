@@ -10,6 +10,7 @@ import java.io.Serializable;
 import java.util.Set;
 
 @Entity
+
 @Getter
 @Setter
 @AllArgsConstructor
@@ -23,8 +24,9 @@ public class Role implements Serializable {
         @GeneratedValue(strategy = GenerationType.AUTO)
         private int id;
         @Enumerated(EnumType.STRING)
-    //    private RoleName role;
+       private ERole role;
         @ManyToMany(mappedBy="roles", cascade = CascadeType.PERSIST, fetch
                 = FetchType.EAGER)
         private Set<User> Users;
 }
+
