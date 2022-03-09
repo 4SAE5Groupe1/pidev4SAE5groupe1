@@ -1,29 +1,44 @@
-/*
 package tn.esprit.spring.controller;
 
 import com.paypal.api.payments.Links;
 import com.paypal.api.payments.Payment;
 import com.paypal.base.rest.PayPalRESTException;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import tn.esprit.spring.Repository.UserRepository;
 import tn.esprit.spring.Services.EventService;
 import tn.esprit.spring.configuration.PaypalPaymentIntent;
 import tn.esprit.spring.configuration.PaypalPaymentMethod;
+import tn.esprit.spring.configuration.URLUtils;
 import tn.esprit.spring.entites.*;
 
+import javax.servlet.http.HttpServletRequest;
 import java.util.List;
 
 @RestController
+@RequestMapping("/")
 public class EventController {
+    private Logger log = LoggerFactory.getLogger(getClass());
+    @RequestMapping(method = RequestMethod.GET)
+    public String index(){
+        return "index";
+    }
+    public static final String PAYPAL_SUCCESS_URL = "pay/success";
+    public static final String PAYPAL_CANCEL_URL = "pay/cancel";
+    @Autowired
+    private UserRepository userRepository;
     @Autowired
     private tn.esprit.spring.Repository.eventrepo eventrepo ;
-    public static final String SUCCESS_URL = "user/success";
-    public static final String CANCEL_URL = "pay/cancel";
+
     @Autowired
     private EventService eventService ;
 // ajouter un evenement et l'affecter a une categorie :
+
+
     @PostMapping("/addEvennt/{idCategorieEvent}")
     public ResponseEntity<Event> ajouterproduit(@RequestBody Event event, @PathVariable Integer idCategorieEvent){
         Event result =eventService.ajouteretaffecterevent(event,idCategorieEvent);
@@ -52,8 +67,9 @@ public class EventController {
         return new ResponseEntity<>(result , HttpStatus.OK);
     }
     //participer a un evenement :
-    @PostMapping ("/Participer/{idevent}/{id}")
-    public String participeEvent( @PathVariable("idevent") Integer idevent , @PathVariable ("id") Integer id ) {
+   // @RequestMapping(method = RequestMethod.POST, value = "Participer/{idevent}/{id}")
+   @PostMapping ("/Participer/{idevent}/{id}")
+    public String participeEvent(HttpServletRequest request , @PathVariable("idevent") Integer idevent , @PathVariable ("id") Integer id ) {
 
         Event event = eventService.findEventById(idevent);
         double d = event.getPrice();
@@ -61,66 +77,121 @@ public class EventController {
             eventService.participerevent(idevent, id);
             //  return new ResponseEntity<>(HttpStatus.OK);
         } else {
+            String cancelUrl = URLUtils.getBaseURl(request) + "/" + PAYPAL_CANCEL_URL;
+            String successUrl = URLUtils.getBaseURl(request) + "/" + PAYPAL_SUCCESS_URL;
 
-                try {
-                    Payment payment = eventService.createPayment(
-                            1.00 ,
-                            "USD",
-                            PaypalPaymentMethod.paypal,
-                            PaypalPaymentIntent.sale,
-                            "payment description",
-                            "http://localhost:8080/" + CANCEL_URL,
-                            "http://localhost:8080/" + SUCCESS_URL);
-                    for(Links links : payment.getLinks()){
-                        if(links.getRel().equals("approval_url")){
-                            return "redirect:" + links.getHref();
-                        }
+            try {
+                Payment payment = eventService.createPayment(
+                        4.00,
+                        "USD",
+                        PaypalPaymentMethod.paypal,
+                        PaypalPaymentIntent.sale,
+                        "payment description",
+                        cancelUrl,
+                        successUrl);
+                for(Links links : payment.getLinks()){
+                    if(links.getRel().equals("approval_url")){
+                  return "redirect:" + links.getHref();
                     }
-                } catch (PayPalRESTException e) {
-                    e.printStackTrace();
+
+
                 }
-                return "redirect:/";
+
+
+            } catch (PayPalRESTException e) {
+                log.error(e.getMessage());
+            }
+            return "redirect:/";
 
         }
 
-        return "redirect:/";
+
+        return "participé";
     }
 
 
 
 
+    @GetMapping(PAYPAL_CANCEL_URL)
 
-    @GetMapping(value = CANCEL_URL)
-    public String cancelPay() {
+    public String cancelPay(){
         return "cancel";
     }
+@GetMapping(PAYPAL_SUCCESS_URL)
 
-    @GetMapping(value = SUCCESS_URL)
 
-    public String successPay(@RequestParam("paymentId") String paymentId, @RequestParam("PayerID") String payerId,@RequestParam("idevent") Integer idevent , @RequestParam ("id") Integer id) {
+    public String successPay(@RequestParam("paymentId") String paymentId, @RequestParam("PayerID") String payerId) {
         try {
+
+
+
             Payment payment = eventService.executePayment(paymentId, payerId);
-            System.out.println(payment.toJSON());
-            if (payment.getState().equals("approved")) {
+
+            if(payment.getState().equals("approved")) {
+
+                System.out.println("______________"+payment.getTransactions().get(0).getDescription());
+                System.out.println(payment.toJSON());
 
 
-                System.out.println("-----------payment ------------------"
-                        +payment);
-                Event event =eventService.findEventById(idevent) ;
-                event.setEtatPayement(EtatPayement.Approved);
-                eventrepo.save(event);
-
-                eventService.participationPayante(idevent,id);
-              //  System.out.println("success");
-
-                return "success";
+                return  "success" ;
 
             }
         } catch (PayPalRESTException e) {
-            System.out.println(e.getMessage());
+            log.error(e.getMessage());
         }
-        return "redirect:/";
+        return  null ;
+    }
+    // ajouter like
+    @PostMapping("/addlike/{idevent}/{id}")
+    public ResponseEntity<LikeEvent> ajouterLike(@PathVariable("idevent") Integer idevent , @PathVariable ("id") Integer id  ){
+        eventService.likeEvent(idevent,id);
+        return new ResponseEntity<>( HttpStatus.CREATED);
+
+    }
+    //ajouter dislike
+    @PostMapping("/adddislike/{idevent}/{id}")
+    public ResponseEntity<DislikeEvent> ajouterdisLike(@PathVariable("idevent") Integer idevent , @PathVariable ("id") Integer id  ){
+        eventService.DislikeEvent(idevent,id);
+        return new ResponseEntity<>( HttpStatus.CREATED);
+
+    }
+    // tester number des participation par id event
+    @GetMapping("/numberdeparticipation/{id}")
+    public Long numberparticipation(@PathVariable Long id){
+
+        return   eventService.numberparticipation(id);
+      //  return new ResponseEntity<>(result , HttpStatus.OK);
+    }
+    // liste des participation par evenement :
+    @GetMapping("/Listeparticipation/{idevent}")
+    public  List<ParticipationEvent> Listeparticipation(@PathVariable Long idevent){
+
+
+        List<ParticipationEvent> result = eventService.listparticipationwithIdEvent(idevent);
+        return result;
+    }
+    //test
+    @GetMapping("/iduser=iduserparticipe/{idevent}")
+    public  String tester (@PathVariable Long idevent){
+
+
+       return eventService.tester(idevent);
+
+    }
+// remise d'un event
+    @PostMapping("/addremise/{idevent}")
+    public ResponseEntity<Event> addremise ( @PathVariable Integer idevent){
+        eventService.remiseEvent( idevent);
+        return new ResponseEntity<>( HttpStatus.CREATED);
+
     }
 
+
+
+
+
+
+
+
+
 }
-*/

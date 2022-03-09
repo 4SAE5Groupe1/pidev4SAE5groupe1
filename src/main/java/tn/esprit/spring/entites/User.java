@@ -6,7 +6,6 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.persistence.*;
-
 import java.io.Serializable;
 import java.util.Set;
 
@@ -46,7 +45,13 @@ public class User implements Serializable {
 	private Set<Donation> donations;
 	@OneToMany(cascade = CascadeType.ALL, mappedBy = "user")
 	private Set<Candidacy> candidacies;
+
 	@OneToMany(cascade = CascadeType.ALL, mappedBy = "user")
 	private Set <ParticipationEvent>  participationEvent ;
+	@OneToMany(cascade = CascadeType.ALL, mappedBy = "user")
+	private Set <LikeEvent>  LikeEvent ;
+	@OneToMany(cascade = CascadeType.ALL, mappedBy = "user")
+	private Set <DislikeEvent>  DislikeEvent ;
+
 
 }
