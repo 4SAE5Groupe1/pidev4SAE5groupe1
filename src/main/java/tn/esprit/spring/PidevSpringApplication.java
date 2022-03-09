@@ -10,8 +10,9 @@ import org.springframework.boot.autoconfigure.security.servlet.UserDetailsServic
 import org.springframework.boot.context.event.ApplicationReadyEvent;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.event.EventListener;
-
 import tn.esprit.spring.services.EmailSenderService;
+import org.springframework.boot.context.event.ApplicationReadyEvent;
+import org.springframework.context.event.EventListener;
 
 
 
@@ -31,3 +32,7 @@ public class PidevSpringApplication {
 	
 
 }
+
+
+
+
