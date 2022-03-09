@@ -1,7 +1,7 @@
 package tn.esprit.spring.DAO;
 
 import com.google.zxing.WriterException;
-import tn.esprit.spring.entities.Subscription;
+import tn.esprit.spring.entites.Subscription;
 
 import java.io.IOException;
 import java.util.List;

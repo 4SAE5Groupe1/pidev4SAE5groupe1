@@ -3,7 +3,7 @@ package tn.esprit.spring.services;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import tn.esprit.spring.DAO.UserDAO;
-import tn.esprit.spring.entities.User;
+import tn.esprit.spring.entites.User;
 import tn.esprit.spring.repositories.UserRepository;
 
 import java.time.Duration;

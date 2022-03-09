@@ -1,6 +1,6 @@
 package tn.esprit.spring.DAO;
 
-import tn.esprit.spring.entities.User;
+import tn.esprit.spring.entites.User;
 
 import java.util.List;
 

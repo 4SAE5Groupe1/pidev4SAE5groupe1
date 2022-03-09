@@ -1,4 +1,4 @@
-package tn.esprit.spring.entities;
+package tn.esprit.spring.entites;
 
 public class ResponsePayment {
     private boolean status;

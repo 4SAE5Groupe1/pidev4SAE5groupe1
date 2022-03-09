@@ -4,8 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.mail.MailException;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.multipart.MultipartFile;
-import tn.esprit.spring.entities.User;
+import tn.esprit.spring.entites.User;
 import tn.esprit.spring.services.MailService;
 import tn.esprit.spring.services.UserService;
 

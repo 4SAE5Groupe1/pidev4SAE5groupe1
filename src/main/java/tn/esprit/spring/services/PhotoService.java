@@ -5,8 +5,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 import tn.esprit.spring.DAO.IPhotoService;
-import tn.esprit.spring.entities.Photo;
-import tn.esprit.spring.entities.User;
+import tn.esprit.spring.entites.Photo;
+import tn.esprit.spring.entites.User;
 import tn.esprit.spring.repositories.PhotoRepository;
 import tn.esprit.spring.repositories.UserRepository;
 

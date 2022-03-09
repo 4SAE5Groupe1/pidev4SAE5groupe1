@@ -3,8 +3,8 @@ package tn.esprit.spring.services;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import tn.esprit.spring.DAO.BadgeDAO;
-import tn.esprit.spring.entities.Badge;
-import tn.esprit.spring.entities.User;
+import tn.esprit.spring.entites.Badge;
+import tn.esprit.spring.entites.User;
 import tn.esprit.spring.repositories.BadgeRepository;
 import tn.esprit.spring.repositories.UserRepository;
 

@@ -7,7 +7,7 @@ import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.stereotype.Service;
-import tn.esprit.spring.entities.User;
+import tn.esprit.spring.entites.User;
 
 import javax.mail.MessagingException;
 import javax.mail.internet.MimeMessage;

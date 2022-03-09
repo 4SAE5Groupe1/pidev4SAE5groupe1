@@ -3,7 +3,7 @@ package tn.esprit.spring.services;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import tn.esprit.spring.DAO.SubscriptionDAO;
-import tn.esprit.spring.entities.Subscription;
+import tn.esprit.spring.entites.Subscription;
 import tn.esprit.spring.repositories.SubscriptionRepo;
 import tn.esprit.spring.repositories.UserRepository;
 

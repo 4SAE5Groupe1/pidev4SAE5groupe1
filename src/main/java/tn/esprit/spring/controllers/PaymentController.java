@@ -6,7 +6,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
-import tn.esprit.spring.entities.ResponsePayment;
+import tn.esprit.spring.entites.ResponsePayment;
 import tn.esprit.spring.services.StripeService;
 
 @Controller
