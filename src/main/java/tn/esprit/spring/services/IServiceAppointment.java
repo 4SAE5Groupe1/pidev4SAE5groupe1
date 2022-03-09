@@ -18,7 +18,7 @@ public interface IServiceAppointment {
 	
 	public Appointment updateAppointment(Appointment appointment);
 	
-	public String sendEmail();
+	public String sendEmail(); 
 
 	
 	

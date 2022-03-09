@@ -5,6 +5,8 @@ import java.io.IOException;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.FileSystems;
 import java.nio.file.Path;
+import java.time.LocalDate;
+import java.util.Date;
 import java.util.List;
 
 import javax.mail.Message;
@@ -12,6 +14,13 @@ import javax.mail.MessagingException;
 import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeMessage;
 
+import org.quartz.CronScheduleBuilder;
+import org.quartz.JobBuilder;
+import org.quartz.JobDetail;
+import org.quartz.Scheduler;
+import org.quartz.Trigger;
+import org.quartz.TriggerBuilder;
+import org.quartz.impl.StdSchedulerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.ByteArrayResource;
 import org.springframework.core.io.FileSystemResource;
@@ -36,6 +45,8 @@ import tn.esprit.spring.entities.User;
 import tn.esprit.spring.repositories.AppointmentRepository;
 import tn.esprit.spring.repositories.ExpertRepository;
 import tn.esprit.spring.repositories.UserRepository;
+import tn.esprit.spring.scheduledEmail.EmailUtil;
+import tn.esprit.spring.scheduledEmail.Job1;
 
 /* import java.io.ByteArrayOutputStream;
 import java.io.IOException;
@@ -135,9 +146,30 @@ public class AppointmentServiceImp implements IServiceAppointment {
 
 	@Override
 	public List<Appointment> getAllAppointments() {
-		return (List<Appointment>) appointmentRepository.findAll();
+		
+		//LocalDate ldate = LocalDate.now();
+		 
+		
+		/* for(Appointment appointment : appointments){
+			
+			if(appointment.getDate().equals(ldate)){
+			
+				
+				System.out.println("Job1 --->>> Time is " + new Date());
+				EmailUtil.sendEmail(appointment.getEmail(),"Appointment Reminder", "We send you this email "
+						+ "to remind you that you have an appointment today  " +appointment.getDate()+ "with " +appointment.getExpert().getNomExpert()+ ""
+								+ "have a nice day we are waiting for you !!");
+			
+			}
+		} */
+			
+		return  (List<Appointment>) appointmentRepository.findAll(); 
+		
+		
 	}
+	
 
+	
 	@Override
 	public void deleteAppointment(Long idAppointment) {
 		appointmentRepository.deleteById(idAppointment);
