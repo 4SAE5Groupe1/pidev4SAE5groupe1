@@ -5,11 +5,15 @@ import java.util.Date;
 
 
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -32,10 +36,13 @@ public class Candidacy implements Serializable{
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int idCandidacy;
+	@Enumerated(EnumType.STRING)
 	private Status status;
 	private String description;	
+	@Temporal (TemporalType.DATE)
 	private Date date;
-	private int idEstablishment;
+	@Enumerated(EnumType.STRING)
+	private Nationality nationality;
 	@ManyToOne
 	private User user;
 	@OneToOne

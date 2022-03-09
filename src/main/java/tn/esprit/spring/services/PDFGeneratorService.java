@@ -25,6 +25,7 @@ public class PDFGeneratorService {
 	
  User user ;
 	
+
 	private static final String QR_CODE_IMAGE_PATH = "./src/main/resources/QRCode.png";
 	public static void generateQRCodeImage(String text, int width, int height, String filePath)
             throws IOException, WriterException {
@@ -46,6 +47,7 @@ public class PDFGeneratorService {
         fontTitle.setColor(Color.RED);
         
         Paragraph paragraph = new Paragraph("Certificate", fontTitle);
+
         paragraph.setAlignment(Paragraph.ALIGN_CENTER);
 
         Font fontParagraph = FontFactory.getFont(FontFactory.TIMES_BOLDITALIC);
@@ -79,8 +81,6 @@ public class PDFGeneratorService {
         document.add(image);
         document.add(parag);
         document.add(image2);
-        
-      
         document.close();
     }
 }

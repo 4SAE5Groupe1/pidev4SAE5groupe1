@@ -1,13 +1,8 @@
 package tn.esprit.spring.entites;
 
+import lombok.*;
+
 import javax.persistence.*;
-
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
-import lombok.ToString;
-
 import java.io.Serializable;
 import java.util.Date;
 
@@ -30,8 +25,7 @@ public class Donation  implements Serializable {
     private float Amount ;
 	@ManyToOne
 	private User user;
-	@ManyToOne
-	private Pot pot;
+
 
    
 }
