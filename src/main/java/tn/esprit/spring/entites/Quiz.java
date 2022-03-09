@@ -42,8 +42,6 @@ public class Quiz implements Serializable{
 	@ManyToOne
 	@JsonIgnore
 	private Training training ;
-	@OneToOne
-	private Certification certification;
 	@OneToMany(cascade = CascadeType.ALL, mappedBy="quiz")
 	private Set<QuestionQuiz> QuestionQuizs;
 	@OneToMany(cascade = CascadeType.ALL, mappedBy="quiz")
