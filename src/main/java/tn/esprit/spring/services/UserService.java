@@ -1,15 +1,11 @@
 package tn.esprit.spring.services;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.security.core.userdetails.UserDetailsService;
-import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 import tn.esprit.spring.DAO.UserDAO;
 import tn.esprit.spring.entities.User;
 import tn.esprit.spring.repositories.UserRepository;
 
-import javax.transaction.Transactional;
 import java.time.Duration;
 import java.time.LocalDateTime;
 import java.util.List;
@@ -17,17 +13,10 @@ import java.util.Optional;
 import java.util.UUID;
 
 @Service
-public class UserDetailsServiceImpl implements UserDetailsService, UserDAO {
+public class UserService implements UserDAO {
     private static final long EXPIRE_TOKEN_AFTER_MINUTES = 30;
     @Autowired
     UserRepository userRepository;
-    @Override
-    @Transactional
-    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        User user = userRepository.findByUsername(username)
-                .orElseThrow(() -> new UsernameNotFoundException("User Not Found with username: " + username));
-        return UserDetailsImpl.build(user);
-    }
 
     @Override
     public List<User> getAllUsers() {
@@ -91,6 +80,13 @@ public class UserDetailsServiceImpl implements UserDetailsService, UserDAO {
         return "Your password successfully updated.";
     }
 
+    /**
+     * Generate unique token. You may add multiple parameters to create a strong
+     * token.
+     *
+     * @return unique token
+     */
+
     private String generateToken() {
         StringBuilder token = new StringBuilder();
 
@@ -111,6 +107,5 @@ public class UserDetailsServiceImpl implements UserDetailsService, UserDAO {
 
         return diff.toMinutes() >= EXPIRE_TOKEN_AFTER_MINUTES;
     }
-
 
 }

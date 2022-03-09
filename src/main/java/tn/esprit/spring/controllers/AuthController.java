@@ -2,6 +2,7 @@ package tn.esprit.spring.controllers;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.mail.MailException;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
@@ -18,6 +19,7 @@ import tn.esprit.spring.payload.response.MessageResponse;
 import tn.esprit.spring.repositories.RoleRepository;
 import tn.esprit.spring.repositories.UserRepository;
 import tn.esprit.spring.security.jwt.JwtUtils;
+import tn.esprit.spring.services.MailService;
 import tn.esprit.spring.services.UserDetailsImpl;
 
 import java.util.HashSet;
@@ -29,6 +31,9 @@ import java.util.stream.Collectors;
 @RestController
 @RequestMapping("/api/auth")
 public class AuthController {
+    @Autowired
+    private MailService notificationService;
+
     @Autowired
     AuthenticationManager authenticationManager;
 
@@ -83,6 +88,13 @@ public class AuthController {
         User user = new User(signUpRequest.getUsername(),
                 signUpRequest.getEmail(),
                 encoder.encode(signUpRequest.getPassword()));
+        user.setEmail(signUpRequest.getEmail());
+        try {
+            notificationService.sendEmail(user);
+        } catch (MailException mailException) {
+            System.out.println(mailException);
+        }
+
 
         Set<String> strRoles = signUpRequest.getRole();
         Set<Role> roles = new HashSet<>();
