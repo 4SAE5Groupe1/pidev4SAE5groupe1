@@ -12,11 +12,14 @@ import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import tn.esprit.spring.entites.User;
 
 
 @Entity
@@ -38,10 +41,12 @@ public class Complaint implements Serializable{
 	private Long IdComplaint;
 	@Column(name="contentComplaint")
 	private String Content;
-	@Column(name="titleOffer")
+	@Column(name="titleComplaint")
 	private String Title;
 	@Column(name="decisionComplaint")
-	private String Decision;
-	@ManyToOne
+	private String decision = "Pas de decision" ;
+	
+	//@JsonIgnore
+	@ManyToOne()
 	private User user;
 }
