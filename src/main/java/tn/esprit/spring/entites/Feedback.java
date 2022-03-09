@@ -1,21 +1,11 @@
 package tn.esprit.spring.entites;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import lombok.*;
+
+import javax.persistence.*;
 import java.io.Serializable;
 import java.util.Date;
-
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.ManyToOne;
-
-import com.fasterxml.jackson.annotation.JsonIgnore;
-
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
-import lombok.ToString;
 
 @Entity
 @Getter
@@ -26,18 +16,18 @@ import lombok.ToString;
 public class Feedback implements Serializable{
 
 	/**
-	 * 
+	 *
 	 */
 	private static final long serialVersionUID = 1L;
 	@Id
 	@GeneratedValue (strategy = GenerationType.IDENTITY)
 	private int feedbackid ;
-	private String feedbackbody ; 
+	private String feedbackbody ;
 	private Date dateFeedback ;
 	@ManyToOne
 	@JsonIgnore
 	private Training training ;
-    @ManyToOne
-    @JsonIgnore
-    private User user;
+	@OneToOne
+	@JsonIgnore
+	private User user;
 }

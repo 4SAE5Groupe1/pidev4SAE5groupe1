@@ -1,9 +1,6 @@
 package tn.esprit.spring.entites;
 
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 import javax.persistence.*;
 import java.io.Serializable;
@@ -14,15 +11,24 @@ import java.util.Set;
 
 
 @Entity
+@Getter
+@Setter
+@AllArgsConstructor
+@NoArgsConstructor
+@ToString
 @Table(	name = "users",
         uniqueConstraints = {
                 @UniqueConstraint(columnNames = "username"),
                 @UniqueConstraint(columnNames = "email")
         })
 public class User implements Serializable  {
+    /**
+     *
+     */
+    private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    private Integer id;
     private String username;
     private String email;
     private String password;
@@ -61,16 +67,20 @@ public class User implements Serializable  {
     @OneToMany(cascade = CascadeType.PERSIST, mappedBy = "user")
     private Set<Event> events;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "user")
-	private Set<Training> trainings;
-	@OneToMany(cascade = CascadeType.ALL, mappedBy = "user")
-	private Set<Candidacy> candidacies;
-	@OneToMany(cascade = CascadeType.ALL, mappedBy = "user")
-	private Set<ResponseLearner> ResponseLearners;
+    private Set<Training> trainings;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "user")
+    private Set<Candidacy> candidacies;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "user")
+    private Set<ResponseLearner> ResponseLearners;
     @OneToOne(mappedBy = "user")
     private  Feedback Feedback;
-	@OneToMany(cascade = CascadeType.ALL, mappedBy="user")
-	private Set<Result> results ;
-
+    @OneToMany(cascade = CascadeType.ALL, mappedBy="user")
+    private Set<Result> results ;
+    public User(String username, String email, String password) {
+        this.username = username;
+        this.email = email;
+        this.password = password;
+    }
 
 }
 

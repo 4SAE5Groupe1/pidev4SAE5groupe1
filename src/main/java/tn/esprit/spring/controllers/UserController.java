@@ -25,20 +25,20 @@ package tn.esprit.spring.controllers;
 //		List<User> list = (List<User>)UserService.GetUsers();
 //		return list;
 //	}
-//	
+//
 //	// http://localhost:8081/SpringMVC/retrieve-User/
 //	@GetMapping("/retrieve-User/{User-id}")
 //	@ResponseBody
 //	public User retrieveQuiz(@PathVariable("User-id") int UserId) {
 //		return UserService.GetUser(UserId);
 //	}
-//	
+//
 //	// http://localhost:8081/SpringMVC/addUser/
 //	@PostMapping("/addUser") // convert json to java object
 //	@ResponseBody
 //	public User addUser(@RequestBody User u) {
 //		User user = UserService.addUser(u);
-//		return  user;	
+//		return  user;
 //	}
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -46,6 +46,10 @@ import org.springframework.mail.MailException;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
+import tn.esprit.spring.DAO.UserDAO;
+import tn.esprit.spring.entites.User;
+import tn.esprit.spring.services.Iuser;
+import tn.esprit.spring.services.MailService;
 
 import javax.mail.MessagingException;
 import java.util.List;
@@ -58,10 +62,10 @@ public class UserController {
     private MailService notificationService;
 
     @Autowired
-    UserService userService;
-    
-	@Autowired
-	Iuser UserService ;
+    UserDAO userService;
+
+    @Autowired
+    Iuser UserService ;
 
     @GetMapping("/all")
     public String allAccess() {
@@ -73,7 +77,7 @@ public class UserController {
     public String userAccess() {
         return "User Content.";
     }
-        @GetMapping("/trainer")
+    @GetMapping("/trainer")
     @PreAuthorize("hasRole('TRAINER')")
     public String trainerAccess() {
         return "Trainer Board.";

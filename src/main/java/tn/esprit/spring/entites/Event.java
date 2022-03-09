@@ -5,6 +5,7 @@ import lombok.*;
 import javax.persistence.*;
 import java.io.Serializable;
 import java.util.Date;
+import java.util.Set;
 
 
 @Entity
@@ -45,7 +46,7 @@ public class Event implements Serializable {
 	private Categorieevent categorieevent;
 
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "event")
-    private Set <ParticipationEvent>  participationEvent ;
+    private Set<ParticipationEvent> participationEvent ;
 
     private Integer NumberLike =0 ;
     private Integer NumberDislike = 0 ;

@@ -3,10 +3,8 @@ package tn.esprit.spring.controllers;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.bind.annotation.RestController;
 import tn.esprit.spring.services.EmailSenderService;
 import tn.esprit.spring.services.PDFGeneratorService;
 
@@ -20,6 +18,7 @@ import java.util.Date;
 
 
 @Controller
+@RequestMapping("/api/test")
 public class PDFExportController {
 
 	@Autowired
@@ -45,7 +44,7 @@ public class PDFExportController {
         service.sendEmailWithAttachment("abessi.fakhreddine21@gmail.com",
 				"This is Email Body with Attachment...",
 				"This email has attachment",
-				"C:\\Users\\Fakhri\\Downloads\\pdf_2022-02-27_01_13_53.pdf");
+				"C:\\Users\\A\\Downloads\\pdf_2022-03-09_08_11_35.pdf");
 
     }
 }

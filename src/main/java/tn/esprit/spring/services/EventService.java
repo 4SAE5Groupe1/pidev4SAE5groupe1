@@ -103,7 +103,7 @@ public class EventService {
                 ParticipationEvent participationEvent = new ParticipationEvent();
 
 
-                User user = userRepository.findById(id).get();
+                User user = userRepository.findById(Long.valueOf(id)).get();
                 participationEvent.setEvent(event);
                 participationEvent.setUser(user);
                 event.setNumberParticipant(event.getNumberParticipant() + 1);
@@ -113,7 +113,7 @@ public class EventService {
 
                 Map<String, Object> model = new HashMap<>();
                 model.put("event", event.getName());
-                model.put("name", user.getName());
+                model.put("name", user.getUsername());
                 MailResponse response = new MailResponse();
                 MimeMessage message = javaMailSender.createMimeMessage();
                 try {
@@ -128,7 +128,7 @@ public class EventService {
 
                     helper.setTo(user.getEmail());
                     helper.setText(html, true);
-                    helper.setSubject("new mail from " + user.getName());
+                    helper.setSubject("new mail from " + user.getUsername());
                     helper.setFrom("testmailingspring@gmail.com");
                     javaMailSender.send(message);
 
@@ -149,7 +149,7 @@ public class EventService {
             ParticipationEvent participationEvent = new ParticipationEvent();
 
 
-            User user = userRepository.findById(id).get();
+            User user = userRepository.findById(Long.valueOf(id)).get();
             participationEvent.setEvent(event);
             participationEvent.setUser(user);
             event.setNumberParticipant(event.getNumberParticipant() + 1);
@@ -227,7 +227,7 @@ public class EventService {
      public void likeEvent(Integer idevent, Integer id){
 
          Event event = eventrepo.findById(idevent).get();
-         User user = userRepository.findById(id).get();
+         User user = userRepository.findById(Long.valueOf(id)).get();
 
 
          LikeEvent likeEvent = new LikeEvent() ;
@@ -248,7 +248,7 @@ public class EventService {
      @Transactional
      public void DislikeEvent (Integer idevent, Integer id){
         Event event = eventrepo.findById(idevent).get();
-        User user = userRepository.findById(id).get();
+        User user = userRepository.findById(Long.valueOf(id)).get();
         DislikeEvent dislikeEvent = new DislikeEvent() ;
         dislikeEvent.setEvent(event);
         dislikeEvent.setUser(user);
@@ -306,8 +306,8 @@ public Long numberparticipation(long idevent){
             SimpleMailMessage mailMessage = new SimpleMailMessage();
             mailMessage.setFrom("testmailingspring@gmail.com");
             mailMessage.setTo(a.getEmail());
-            mailMessage.setSubject("new mail from " + a.getName());
-            mailMessage.setText("MR/M" + a.getName() + " Nous avons fait un remise de 50 %  pour notre evenement " + event.getName() + "qui commence le " + event.getStartdate() + "nous attendons votre participation");
+            mailMessage.setSubject("new mail from " + a.getUsername());
+            mailMessage.setText("MR/M" + a.getUsername() + " Nous avons fait un remise de 50 %  pour notre evenement " + event.getName() + "qui commence le " + event.getStartdate() + "nous attendons votre participation");
             javaMailSender.send(mailMessage);}
 
 
@@ -355,7 +355,7 @@ public List<ParticipationEvent> listparticipationwithIdEvent (long idevent){
 
     //find user by event id
     public User findUser (Integer id){
-     User user =    userRepository.findById(id).get() ;
+     User user =    userRepository.findById(Long.valueOf(id)).get() ;
      return  user ;
 
     }
