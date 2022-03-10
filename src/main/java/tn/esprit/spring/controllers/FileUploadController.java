@@ -22,7 +22,7 @@ import java.io.IOException;
 import java.util.UUID;
 
 @RestController
-@RequestMapping("api/v1")
+@RequestMapping("/api/test")
 public class FileUploadController {
 
     @Autowired
@@ -30,20 +30,21 @@ public class FileUploadController {
 
     @PostMapping("/upload/local")
     public void uploadLocal(@RequestParam("file")MultipartFile multipartFile) throws IOException, ZipException {
-
+        fileUploadService.uploadToLocal(multipartFile);
             //unzipFiles(multipartFile);
-           fileUploadService.uploadToLocal(multipartFile);
+
 
 
     }
     @PostMapping("/upload/db")
     public FileUploadResponse uploadDb(@RequestParam("file")MultipartFile multipartFile)
     {
+        fileUploadService.uploadToLocal(multipartFile);
        UploadedFile uploadedFile = fileUploadService.uploadToDb(multipartFile);
        FileUploadResponse response = new FileUploadResponse();
        if(uploadedFile!=null){
            String downloadUri = ServletUriComponentsBuilder.fromCurrentContextPath()
-                   .path("/api/v1/download/")
+                   .path("/api/test/download/")
                    .path(uploadedFile.getFileId())
                    .toUriString();
            response.setDownloadUri(downloadUri);

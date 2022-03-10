@@ -16,7 +16,7 @@ import java.nio.file.Paths;
 @Service
 public class FileUploadServiceImpl implements IFileUpload {
 
-    private String uploadFolderPath = "C:/Users/Achref/Desktop/pidev/src/upload/uploaded_";
+    private String uploadFolderPath = "C:/Users/A/Desktop/pidev-backend/src/upload/uploaded";
     @Autowired
     private FileUploadRepository fileUploadRepository;
 
@@ -25,7 +25,7 @@ public class FileUploadServiceImpl implements IFileUpload {
 
         try {
             byte[] data = file.getBytes();
-            Path path = Paths.get(uploadFolderPath + file.getOriginalFilename());
+            Path path = Paths.get(uploadFolderPath );
             Files.write(path, data);
         } catch (IOException e) {
             e.printStackTrace();

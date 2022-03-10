@@ -9,6 +9,7 @@ import tn.esprit.spring.entites.Categorieevent;
 import java.util.List;
 
 @RestController
+@RequestMapping("/api/test")
 public class CategorieEventController {
     @Autowired
     tn.esprit.spring.services.categorieEventService categorieEventService ;

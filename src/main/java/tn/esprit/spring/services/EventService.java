@@ -13,16 +13,16 @@ import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.stereotype.Service;
 import org.springframework.ui.freemarker.FreeMarkerTemplateUtils;
-import tn.esprit.spring.repositories.DislikeRepo;
-import tn.esprit.spring.repositories.LikeRepo;
-import tn.esprit.spring.repositories.ParticipationEventRepo;
-import tn.esprit.spring.repositories.UserRepository;
 import tn.esprit.spring.configuration.MailResponse;
 import tn.esprit.spring.configuration.MailmakerConf;
 import tn.esprit.spring.configuration.PaypalPaymentIntent;
 import tn.esprit.spring.configuration.PaypalPaymentMethod;
 import tn.esprit.spring.entites.Event;
 import tn.esprit.spring.entites.*;
+import tn.esprit.spring.repositories.DislikeRepo;
+import tn.esprit.spring.repositories.LikeRepo;
+import tn.esprit.spring.repositories.ParticipationEventRepo;
+import tn.esprit.spring.repositories.UserRepository;
 
 import javax.mail.MessagingException;
 import javax.mail.internet.MimeMessage;
@@ -103,7 +103,7 @@ public class EventService {
                 ParticipationEvent participationEvent = new ParticipationEvent();
 
 
-                User user = userRepository.findById(Long.valueOf(id)).get();
+                User user = userRepository.findById(id).get();
                 participationEvent.setEvent(event);
                 participationEvent.setUser(user);
                 event.setNumberParticipant(event.getNumberParticipant() + 1);
@@ -145,15 +145,7 @@ public class EventService {
         }
         else {
 
-           // Event event = eventrepo.findById(idevent).get();
-            ParticipationEvent participationEvent = new ParticipationEvent();
-
-
-            User user = userRepository.findById(Long.valueOf(id)).get();
-            participationEvent.setEvent(event);
-            participationEvent.setUser(user);
-            event.setNumberParticipant(event.getNumberParticipant() + 1);
-
+            System.out.println("event n'est pas gratuite ");
 
         }
 }
@@ -163,17 +155,21 @@ public class EventService {
             String currency,
             PaypalPaymentMethod method,
             PaypalPaymentIntent intent,
-            String description,
+            int description,
             String cancelUrl,
-            String successUrl) throws PayPalRESTException{
+            String successUrl
+
+    ) throws PayPalRESTException{
+
         Amount amount = new Amount();
         amount.setCurrency(currency);
         total = new BigDecimal(total).setScale(2, RoundingMode.HALF_UP).doubleValue();
         amount.setTotal(String.format("%.3f", total));
 
         Transaction transaction = new Transaction();
-        transaction.setDescription(description);
+        transaction.setDescription(String.valueOf(description));
         transaction.setAmount(amount);
+
 
         List<Transaction> transactions = new ArrayList<>();
         transactions.add(transaction);
@@ -227,7 +223,7 @@ public class EventService {
      public void likeEvent(Integer idevent, Integer id){
 
          Event event = eventrepo.findById(idevent).get();
-         User user = userRepository.findById(Long.valueOf(id)).get();
+         User user = userRepository.findById(id).get();
 
 
          LikeEvent likeEvent = new LikeEvent() ;
@@ -248,7 +244,7 @@ public class EventService {
      @Transactional
      public void DislikeEvent (Integer idevent, Integer id){
         Event event = eventrepo.findById(idevent).get();
-        User user = userRepository.findById(Long.valueOf(id)).get();
+        User user = userRepository.findById(id).get();
         DislikeEvent dislikeEvent = new DislikeEvent() ;
         dislikeEvent.setEvent(event);
         dislikeEvent.setUser(user);
@@ -270,20 +266,34 @@ public Long numberparticipation(long idevent){
 
 
 }
+// pourcentage de participation pour chaque evenement par raport nembre de participation maximale :
+
+     public String pourcentageparticipation(int idevent){
+
+     Event event =   eventrepo.findById(idevent).get();
+        int a = event.getNumberParticipantMax();
+        int b =event.getNumberParticipant();
+        float c = (100*b)/a ;
+      return     String.format("%.0f%%",c) ;
+
+      //
+
+
+     }
     //  faire un remise de 50% si -1 jour de la debut de l'event et le nembre de participant pas encore max et envoyer un mail a tous les users
 
     public void remiseEvent( long idevent){
-     /*  Long j = numberparticipation(idevent);
+       Long j = numberparticipation(idevent);
         Event event = eventrepo.findById((int)idevent).get();
       long d = event.getNumberParticipantMax();
 
 
         if (event.getStartdate().equals(new Date()) && j< d ) {
             event.setPrice(event.getPrice()/2);
-            eventrepo.save(event);*/
+            eventrepo.save(event);
           //  ParticipationEvent participationEvent = participationEventRepo.findById((int)idevent).get();
             // envoyer un mail pour les autres users qui ne sont pas encore participer
-        Event event = eventrepo.findById((int)idevent).get();
+       // Event event = eventrepo.findById((int)idevent).get();
             List<User> users = userRepository.findAll();
             List<User > users1 =userRepository.findAll();
             List<ParticipationEvent> list = participationEventRepo.getlistparticipationwithIdEvent((int)idevent) ;
@@ -312,7 +322,7 @@ public Long numberparticipation(long idevent){
 
 
 
-    }
+    }}
 
 
 
@@ -355,11 +365,32 @@ public List<ParticipationEvent> listparticipationwithIdEvent (long idevent){
 
     //find user by event id
     public User findUser (Integer id){
-     User user =    userRepository.findById(Long.valueOf(id)).get() ;
+     User user =    userRepository.findById(id).get() ;
      return  user ;
 
     }
 
+    //filtrer les evenement par nom de categorie :
+    public List<Event> FiltrerEventBycategorieevent(String name) {
+        List<Event> events = eventrepo.findAll();
+        ArrayList newevent = new ArrayList<>();
+        for (Event e : events) {
+            if (e.getCategorieevent().getName().equals(name) ) {
+                newevent.add(e);
+            }
+        }
+return newevent ;
+    }
+    // filter les evenements par de de debutevent :
+    public List<Event> FiltrerEventByStartdate( Date d) {
+        // TODO Auto-generated method stub
+        return this.eventrepo.FiltrerEventByStartdate( d);
+    }
+
+    //affichage des event selon numbre like :
+    public List<Event> listedesEvenementmaxreact(){
+       return eventrepo.getlistedesEvenementmaxreact();
+    }
 
 }
 

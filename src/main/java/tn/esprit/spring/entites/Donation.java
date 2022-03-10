@@ -14,17 +14,20 @@ import java.util.Date;
 @ToString
 public class Donation  implements Serializable {
     /**
-	 * 
-	 */
-	private static final long serialVersionUID = 1L;
-	@Id
+     *
+     */
+    private static final long serialVersionUID = 1L;
+    @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer idCategorieEvent ;
+    private Integer idDonation ;
     @Temporal(TemporalType.DATE)
-    private Date dateDonation ;
+    private Date dateDonation = new Date() ;
+
     private float Amount ;
-	@ManyToOne
-	private User user;
+
+    @ManyToOne
+    private pot pot;
+
 
 
    

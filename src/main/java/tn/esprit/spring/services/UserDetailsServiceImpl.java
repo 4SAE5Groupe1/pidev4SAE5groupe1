@@ -42,8 +42,15 @@ public class UserDetailsServiceImpl implements UserDetailsService, UserDAO {
 
     @Override
     public void deleteUser(Long userId) {
+
+    }
+
+    @Override
+    public void deleteUser(Integer userId) {
         userRepository.deleteById(userId);
     }
+
+
 
     @Override
     public String forgotPassword(String email) {

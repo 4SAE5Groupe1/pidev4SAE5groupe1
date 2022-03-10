@@ -62,8 +62,7 @@ public class User implements Serializable  {
     private Set <LikeEvent>  LikeEvent ;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "user")
     private Set <DislikeEvent>  DislikeEvent ;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "user")
-    private Set<Donation> donations;
+
     @OneToMany(cascade = CascadeType.PERSIST, mappedBy = "user")
     private Set<Event> events;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "user")

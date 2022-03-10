@@ -1,5 +1,6 @@
 package tn.esprit.spring.entites;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.*;
 
 import javax.persistence.*;
@@ -37,9 +38,10 @@ public class Event implements Serializable {
 
     private float price ;
 
-
+@JsonIgnore
     @ManyToOne
     private User user;
+
 
 
     @ManyToOne
@@ -50,9 +52,12 @@ public class Event implements Serializable {
 
     private Integer NumberLike =0 ;
     private Integer NumberDislike = 0 ;
+    @JsonIgnore
 
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "event")
     private Set <LikeEvent>  LikeEvent ;
+    @JsonIgnore
+
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "event")
     private Set <DislikeEvent>  DislikeEvent ;
 

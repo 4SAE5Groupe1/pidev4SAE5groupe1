@@ -1,5 +1,6 @@
 package tn.esprit.spring.entites;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -32,6 +33,7 @@ public class Candidacy implements Serializable{
 	private Date date;
 	@Enumerated(EnumType.STRING)
 	private Nationality nationality;
+	@JsonIgnore
 	@ManyToOne
 	private User user;
 	@OneToOne

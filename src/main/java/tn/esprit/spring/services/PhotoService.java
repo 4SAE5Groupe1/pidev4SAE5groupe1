@@ -31,7 +31,7 @@ public class PhotoService implements IPhotoService {
     @Override
 
     public void SavePhoto(MultipartFile file, int userId) throws IOException {
-        User user = userRepository.findById((long) userId).orElse(null);
+        User user = userRepository.findById( userId).orElse(null);
         Photo photo = Photo.builder().name(file.getOriginalFilename()).type(file.getContentType())
                 .image(file.getBytes()).build();
         photoRepository.save(photo);

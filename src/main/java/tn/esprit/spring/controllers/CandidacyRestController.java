@@ -1,35 +1,23 @@
 package tn.esprit.spring.controllers;
 
-import java.io.IOException;
-import java.util.Date;
-import java.util.List;
-
-import javax.mail.MessagingException;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.format.annotation.DateTimeFormat;
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.bind.annotation.RestController;
-import org.springframework.web.multipart.MultipartFile;
-
+import org.springframework.web.bind.annotation.*;
 import tn.esprit.spring.entites.Candidacy;
 import tn.esprit.spring.entites.Nationality;
 import tn.esprit.spring.entites.Status;
 import tn.esprit.spring.services.EmailSenderService;
 import tn.esprit.spring.services.ICandidacy;
 
+import javax.mail.MessagingException;
+import java.util.Date;
+import java.util.List;
+
 
 
 @RestController
-@RequestMapping("/candidacy")
+@RequestMapping("/api/test")
+
 public class CandidacyRestController {
 	@Autowired
 	ICandidacy candidacyService;
@@ -81,7 +69,7 @@ public class CandidacyRestController {
 					
 					+ "Signature",
 					"Candidature à Esprit",
-					"C:\\Users\\Achref\\Desktop\\pidev\\src\\upload\\uploadresume.pdf");
+					"C:\\Users\\A\\Desktop\\pidev-backend\\src\\upload\\uploaded.pdf");
 			return candidacy;
 		
 			}

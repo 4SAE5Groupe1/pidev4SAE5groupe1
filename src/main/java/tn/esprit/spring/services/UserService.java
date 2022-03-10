@@ -31,6 +31,11 @@ public class UserService implements UserDAO {
 
     @Override
     public void deleteUser(Long userId) {
+
+    }
+
+    @Override
+    public void deleteUser(Integer userId) {
         userRepository.deleteById(userId);
     }
 

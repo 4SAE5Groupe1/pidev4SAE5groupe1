@@ -5,6 +5,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import tn.esprit.spring.entites.ResponsePayment;
 import tn.esprit.spring.services.StripeService;
@@ -15,6 +16,7 @@ public class StripeController {
 
 
     @Controller
+    @RequestMapping("/api/test")
     public class PaymentController {
         @Value("${stripe.key.public}")
         private String API_PUBLIC_KEY;

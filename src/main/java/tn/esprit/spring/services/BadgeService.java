@@ -45,7 +45,7 @@ public class BadgeService implements BadgeDAO {
 
     public void ajouterEtaffecterListeBadge(Badge badge, int idUser) {
         badgeRepository.save(badge);
-        User user = userRepository.findById((long) idUser).orElse(null);
+        User user = userRepository.findById( idUser).orElse(null);
 
             badge.setUser(user);
 
